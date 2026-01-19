@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000; // fallback added
 
 // Route 1: Home
 app.get("/", (req, res) => {
@@ -21,6 +21,18 @@ app.get("/info", (req, res) => {
     version: "1.0.0",
     author: "Your Name",
     year: 2026,
+  });
+});
+
+// Route 3: Test (env ke bina bhi chale)
+app.get("/test", (req, res) => {
+  const mode = process.env.MODE || "local"; // env ho to use, warna default
+
+  res.json({
+    route: "test",
+    modeUsed: mode,
+    envAvailable: !!process.env.MODE,
+    message: "Ye route env ke bina bhi kaam karega",
   });
 });
 
